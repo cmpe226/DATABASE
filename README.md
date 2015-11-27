@@ -7,14 +7,14 @@ The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 User creation
 
 
-* View                   
+* **View**                   
 Unregister user
 
 
-* Store procedure 
+* **Store procedure** 
 Top 10 Listing(view+bookmark)
 
 
-* Trigger                
+* **Trigger**                
 Listing creation -> Log Table   
 
