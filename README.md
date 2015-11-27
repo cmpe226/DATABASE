@@ -1,5 +1,5 @@
 
-![alt tag] (http://headerart.weebly.com/uploads/5/7/5/7/5757212/5479132_orig.jpg)
+![alt tag] (http://www.thenology.com/wp-content/uploads/2014/07/1500x500-New-York-Skyline-Twitter-Header0027.jpg)
 
 
 # DATABASE
