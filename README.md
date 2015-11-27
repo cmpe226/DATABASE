@@ -1,5 +1,5 @@
 
-![alt tag] (http://www.thenology.com/wp-content/uploads/2014/07/1500x500-New-York-Skyline-Twitter-Header0027.jpg)
+![alt tag] (http://tweeting.com/wp-content/uploads/2012/11/Snowy-Forest-Twitter-Header-Image.jpg)
 
 
 # DATABASE
