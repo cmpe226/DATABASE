@@ -1,17 +1,17 @@
-### DATABASE
+# DATABASE
 The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 
-#FUNCTION THIS DATABASE PROVIDE:
+## FUNCTION THIS DATABASE PROVIDE:
 
-*Transaction        
+* Transaction        
 User creation
 
 
-*View                   
+* View                   
 Unregister user
 
 
-*Store procedure 
+* Store procedure 
 Top 10 Listing(view+bookmark)
 
 
