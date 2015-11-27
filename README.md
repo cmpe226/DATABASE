@@ -1,5 +1,5 @@
 
-![alt tag] (http://tweeting.com/wp-content/uploads/2012/11/Snowy-Forest-Twitter-Header-Image.jpg)<img 
+![alt tag] (http://tweeting.com/wp-content/uploads/2012/11/Snowy-Forest-Twitter-Header-Image.jpg)
 
 
 # DATABASE
