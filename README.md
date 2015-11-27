@@ -15,6 +15,6 @@ Unregister user
 Top 10 Listing(view+bookmark)
 
 
-*Trigger                
+* Trigger                
 Listing creation -> Log Table   
 
