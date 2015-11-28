@@ -9,10 +9,10 @@ The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 
 * **Transaction**        
   *  usercreations
-QUERY
-EX: 
+  *  QUERY
+  *  EX: 
 
-call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
+  *  call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
                          
                                       // PARAMETER(ALL VARCHAR TYPE)  FirNam   LasNam  username    password
 
