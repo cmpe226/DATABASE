@@ -7,7 +7,7 @@ The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 
 ## FEATURE WE USE IN OUR DATABASE :
 
-* **Transaction QUERY**        
+* **TRANSACTION QUERY**        
   *  usercreations
     *  QUERY
     *  call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
