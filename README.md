@@ -8,7 +8,7 @@ The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 ## FUNCTION THIS DATABASE PROVIDE:
 
 * **Transaction**        
-## User creation
+## User creation ##
 ## QUERY
 ## EX: call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
 				                   FirNam   LasNam  username    password
