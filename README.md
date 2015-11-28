@@ -5,7 +5,7 @@
 # DATABASE
 The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 
-## FUNCTION THIS DATABASE PROVIDE:
+## FEATURE WE USE IN OUR DATABASE :
 
 * **Transaction**        
   *  usercreations
