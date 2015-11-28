@@ -13,6 +13,15 @@ QUERY
 EX: call usercreations('Harry', 'Gate' ,'Harrygate','13132424')
                         FirNam   LasNam  username    password
 
+agentcreations
+QUERY
+EX: call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
+		  		              FirNam  LasNam LicenNum  UserName password
+
+propertyownercreation
+QUERY
+call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
+EX :      				         FirNam   LasNam   username     password
 * **View**                   
 Unregister user
 
