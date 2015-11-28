@@ -15,18 +15,14 @@ The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
                                       // PARAMETER(ALL VARCHAR TYPE)  FirNam   LasNam  username    password
 
   *  agentcreations
-QUERY
-EX: 
-
-call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
+    * QUERY
+    * EX: call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
 	                
                                       // PARAMETER(ALL VARCHAR TYPE) FirNam  LasNam LicenNum  UserName password
 
   *  propertyownercreation
-QUERY
-EX: 
-
-call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
+    * QUERY
+    * EX: call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
       				
                                       // PARAMETER(ALL VARCHAR TYPE) FirNam   LasNam   username     password
 * **View**                   
