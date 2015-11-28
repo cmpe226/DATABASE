@@ -10,19 +10,22 @@ The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 * **Transaction**        
   *  usercreations
 QUERY
-EX: call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
+EX: 
+call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
                          
                                       // PARAMETER(ALL VARCHAR TYPE)  FirNam   LasNam  username    password
 
   *  agentcreations
 QUERY
-EX: call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
+EX: 
+call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
 	                
                                       // PARAMETER(ALL VARCHAR TYPE) FirNam  LasNam LicenNum  UserName password
 
   *  propertyownercreation
 QUERY
-EX: call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
+EX: 
+call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
       				
                                       // PARAMETER(ALL VARCHAR TYPE) FirNam   LasNam   username     password
 * **View**                   
