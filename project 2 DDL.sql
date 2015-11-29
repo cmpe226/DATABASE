@@ -155,6 +155,26 @@ ALTER TABLE Bookmarks ADD CONSTRAINT FK_bookmar_user_no FOREIGN KEY (UserId) REF
 ALTER TABLE Listing_Pictures ADD CONSTRAINT FK_listingpic_listing_no FOREIGN KEY (ListingId) REFERENCES Listing(ListingId);
 
 
+-- All user view
+
+create view PropertyListing.allusers as 
+    select r.UserID as id, null as licensenumber, r.UserName as username, r.Password as password, p.Photo as photo, p.FirstName as firstname, p.LastName as lastname
+    from PropertyListing.RegisteredUser r
+        inner join PropertyListing.Profile p on r.ProfileID = p.ProfileID
+
+    union
+
+    select re.AgentId as id, re.LicenseNumber, re.UserName username, re.Password, p.Photo, p.FirstName, p.LastName
+    from PropertyListing.RealEstateAgent re
+        inner join PropertyListing.Profile p on re.ProfileID = p.ProfileID
+
+    union
+
+    select pr.OwnerId, null as licensenumber,pr.UserName, pr.Password, p.Photo, p.FirstName, p.LastName
+    from PropertyListing.PropertyOwner pr
+        left outer join PropertyListing.Profile p on pr.ProfileID = p.ProfileID;
+
+
 -- usercreations(transaction)
 DELIMITER $$
 CREATE PROCEDURE usercreations(IN FirstName varchar(30), IN LastName varchar(30), IN UserName varchar(40),IN Password varchar(40)) BEGIN
