@@ -161,7 +161,7 @@ CREATE PROCEDURE usercreations(IN FirstName varchar(30), IN LastName varchar(30)
 DECLARE `_rollback` BOOL DEFAULT 0;
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1; START TRANSACTION;
 INSERT INTO Profile (FirstName,LastName) VALUES (FirstName,LastName);
-INSERT INTO RegisteredUser (UserName,Password,ProfileID) VALUES (UserName,Password,(select count(ProfileID) from Profile)) ;
+INSERT INTO RegisteredUser (UserName,Password,ProfileID) VALUES (UserName,Password,(SELECT ProfileID FROM Profile ORDER BY ProfileID DESC LIMIT 1)) ;
 IF `_rollback` THEN
 ROLLBACK; ELSE
 COMMIT; END IF;
@@ -170,7 +170,7 @@ DELIMITER ;
 -- QUERY
 
 -- EX: call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
-				           FirNam   LasNam  username    password
+--				           FirNam   LasNam  username    password
 
 -- agentcreations(transaction)
 
@@ -179,7 +179,7 @@ CREATE PROCEDURE agentcreations(IN FirstName varchar(30), IN LastName varchar(30
 DECLARE `_rollback` BOOL DEFAULT 0;
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1; START TRANSACTION;
 INSERT INTO Profile (FirstName,LastName) VALUES (FirstName,LastName);
-INSERT INTO RealEstateAgent (LicenseNumber,UserName,Password,ProfileID) VALUES (LicenseNumber, UserName,Password,(select count(ProfileID) from Profile)) ;
+INSERT INTO RealEstateAgent (LicenseNumber,UserName,Password,ProfileID) VALUES (LicenseNumber, UserName,Password,(SELECT ProfileID FROM Profile ORDER BY ProfileID DESC LIMIT 1)) ;
 IF `_rollback` THEN
 ROLLBACK; ELSE
 COMMIT; END IF;
@@ -189,7 +189,7 @@ DELIMITER ;
 
 -- QUERY
 -- EX:   call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
-				              FirNam  LasNam LicenNum  UserName password
+--				              FirNam  LasNam LicenNum  UserName password
 
 -- propertyownercreation (transaction)
 DELIMITER $$
@@ -197,7 +197,7 @@ CREATE PROCEDURE propertyownercreation(IN FirstName varchar(30), IN LastName var
 DECLARE `_rollback` BOOL DEFAULT 0;
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1; START TRANSACTION;
 INSERT INTO Profile (FirstName,LastName) VALUES (FirstName,LastName);
-INSERT INTO PropertyOwner (UserName,Password,ProfileID) VALUES (UserName,Password,(select count(ProfileID) from Profile)) ;
+INSERT INTO PropertyOwner (UserName,Password,ProfileID) VALUES (UserName,Password,(SELECT ProfileID FROM Profile ORDER BY ProfileID DESC LIMIT 1)) ;
 IF `_rollback` THEN
 ROLLBACK; ELSE
 COMMIT; END IF;
@@ -205,7 +205,7 @@ END$$
 DELIMITER ;
 -- QUERY
 -- call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
---EX :				         FirNam   LasNam   username     password
+-- EX :				         FirNam   LasNam   username     password
 
 
 -- Trigger (Listing creation --> log table)
