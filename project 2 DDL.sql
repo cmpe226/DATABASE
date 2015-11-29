@@ -20,11 +20,11 @@ unique (UserName)
 
 create table Profile(
 
-ProfileID    integer not null AUTO_INCREMENT,
-Photo        varchar(30),
-FirstName    varchar(30),
-LastName     varchar(30),
-primary key (ProfileID)
+ProfileID integer NOT NULL AUTO_INCREMENT,
+Photo BLOB,
+FirstName VARCHAR(30),
+LastName VARCHAR(30),
+PRIMARY KEY (ProfileID)
 
 
 
