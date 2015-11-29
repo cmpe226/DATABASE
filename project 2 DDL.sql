@@ -7,7 +7,7 @@ use PropertyListing;
 
 create table PropertyOwner(
 
-OwnerId      integer ,
+OwnerId      integer AUTO_INCREMENT,
 UserName     varchar(30) not null ,
 ProfileID    integer,
 Password      varchar(30),
@@ -19,7 +19,8 @@ unique (UserName)
 );
 
 create table Profile(
-ProfileID    integer not null,
+
+ProfileID    integer not null AUTO_INCREMENT,
 Photo        varchar(30),
 FirstName    varchar(30),
 LastName     varchar(30),
@@ -29,7 +30,8 @@ primary key (ProfileID)
 
 );
 create table Property(
-PropertyID   integer not null,
+
+PropertyID   integer not null AUTO_INCREMENT,
 Street       varchar(40),
 City         varchar(40),
 State        varchar(4),
@@ -44,7 +46,7 @@ primary key (PropertyID)
 );
 create table RealEstateAgent(
 
-AgentId       integer     not null,
+AgentId       integer     not null AUTO_INCREMENT,
 LicenseNumber varchar(40) not null,
 UserName      varchar(40) not null,
 Password      varchar(40) not null,
@@ -59,7 +61,7 @@ unique (UserName)
 );
 create table RegisteredUser(
 
-UserID        integer     not null,
+UserID        integer     not null AUTO_INCREMENT,
 UserName      varchar(40) not null,
 Password      varchar(40) not null,
 ProfileID     integer     not null,
@@ -70,15 +72,16 @@ unique (UserName)
 );
 create table Log(
 
-Log_id        integer not null,
-Type          varchar(40),
+Log_id        integer not null AUTO_INCREMENT,
+Decription          varchar(40),
 Timestamp     TIMESTAMP,
 primary key   (Log_id)
 
 
 );
 create table Listing(
-ListingID       integer,
+
+ListingID       integer AUTO_INCREMENT,
 ListingDateTime TIMESTAMP,
 SalePrice       integer,
 SoldPrice       integer,
@@ -91,6 +94,7 @@ primary key (ListingID)
 
 );
 create table Bookmarks(
+
 ListingId integer not null,
 UserId    integer not null,
 primary key (ListingId,UserId)
@@ -108,6 +112,7 @@ foreign key  (PropertyId) references Property(PropertyId)
 
 );
 create table Listing_Pictures(
+
 ListingId   integer,
 Pictures     varchar(40),
 primary key (ListingId,pictures)
@@ -119,7 +124,7 @@ primary key (ListingId,pictures)
 
 
 
---PropertyOwner
+-- PropertyOwner
 ALTER TABLE PropertyOwner ADD CONSTRAINT FK_prepertyowner_profile_id FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID);
 
 
@@ -148,6 +153,86 @@ ALTER TABLE Bookmarks ADD CONSTRAINT FK_bookmar_user_no FOREIGN KEY (UserId) REF
 
 -- Listing_Pictures
 ALTER TABLE Listing_Pictures ADD CONSTRAINT FK_listingpic_listing_no FOREIGN KEY (ListingId) REFERENCES Listing(ListingId);
+
+
+-- usercreations(transaction)
+DELIMITER $$
+CREATE PROCEDURE usercreations(IN FirstName varchar(30), IN LastName varchar(30), IN UserName varchar(40),IN Password varchar(40)) BEGIN
+DECLARE `_rollback` BOOL DEFAULT 0;
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1; START TRANSACTION;
+INSERT INTO Profile (FirstName,LastName) VALUES (FirstName,LastName);
+INSERT INTO RegisteredUser (UserName,Password,ProfileID) VALUES (UserName,Password,(select count(ProfileID) from Profile)) ;
+IF `_rollback` THEN
+ROLLBACK; ELSE
+COMMIT; END IF;
+END$$
+DELIMITER ;
+-- QUERY
+
+-- EX: call usercreations('Harry', 'Gate' ,'Harrygate','13132424');
+				           FirNam   LasNam  username    password
+
+-- agentcreations(transaction)
+
+DELIMITER $$
+CREATE PROCEDURE agentcreations(IN FirstName varchar(30), IN LastName varchar(30),IN LicenseNumber varchar(40) ,IN UserName varchar(40),IN Password varchar(40)) BEGIN
+DECLARE `_rollback` BOOL DEFAULT 0;
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1; START TRANSACTION;
+INSERT INTO Profile (FirstName,LastName) VALUES (FirstName,LastName);
+INSERT INTO RealEstateAgent (LicenseNumber,UserName,Password,ProfileID) VALUES (LicenseNumber, UserName,Password,(select count(ProfileID) from Profile)) ;
+IF `_rollback` THEN
+ROLLBACK; ELSE
+COMMIT; END IF;
+END$$
+DELIMITER ;
+
+
+-- QUERY
+-- EX:   call agentcreations('TOM', 'swift','123ese' ,'tommy','13132424');
+				              FirNam  LasNam LicenNum  UserName password
+
+-- propertyownercreation (transaction)
+DELIMITER $$
+CREATE PROCEDURE propertyownercreation(IN FirstName varchar(30), IN LastName varchar(30), IN UserName varchar(40),IN Password varchar(40)) BEGIN
+DECLARE `_rollback` BOOL DEFAULT 0;
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1; START TRANSACTION;
+INSERT INTO Profile (FirstName,LastName) VALUES (FirstName,LastName);
+INSERT INTO PropertyOwner (UserName,Password,ProfileID) VALUES (UserName,Password,(select count(ProfileID) from Profile)) ;
+IF `_rollback` THEN
+ROLLBACK; ELSE
+COMMIT; END IF;
+END$$
+DELIMITER ;
+-- QUERY
+-- call propertyownercreation('Jill',  'Hanson' ,'jellyson',  'erer234');
+--EX :				         FirNam   LasNam   username     password
+
+
+-- Trigger (Listing creation --> log table)
+-- DELIMITER $$ ;
+-- CREATE TRIGGER ListingTriggerLog AFTER UPDATE ON Listing
+-- FOR EACH ROW
+-- BEGIN
+-- INSERT into Log(Log_id,Decription,Timestamp)
+-- VALUES ((SELECT ListingID FROM Listing ORDER BY ListingID DESC LIMIT 1),(SELECT Description FROM Listing,Property where Listing.PropertyID=Property.PropertyID ORDER BY ListingID DESC LIMIT 1),now()); 
+-- END $$
+-- DELIMITER ; $$
+-- 
+-- 
+-- 
+-- 
+-- 
+-- 
+-- 
+-- 
+-- UPDATE Listing
+-- SET SalePrice=123,SoldPrice=333,PropertyID=1
+-- WHERE PropertyID=1;
+-- 
+-- INSERT into Property(Street,City,State,Zip,Description,OwerId) value('sd','sdf','fd',123,'sdf','1');
+-- select * from Property;
+
+
 
 
 
