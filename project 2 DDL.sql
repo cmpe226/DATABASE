@@ -208,29 +208,6 @@ DELIMITER ;
 -- EX :				         FirNam   LasNam   username     password
 
 
--- Trigger (Listing creation --> log table)
--- DELIMITER $$ ;
--- CREATE TRIGGER ListingTriggerLog AFTER UPDATE ON Listing
--- FOR EACH ROW
--- BEGIN
--- INSERT into Log(Log_id,Decription,Timestamp)
--- VALUES ((SELECT ListingID FROM Listing ORDER BY ListingID DESC LIMIT 1),(SELECT Description FROM Listing,Property where Listing.PropertyID=Property.PropertyID ORDER BY ListingID DESC LIMIT 1),now()); 
--- END $$
--- DELIMITER ; $$
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- UPDATE Listing
--- SET SalePrice=123,SoldPrice=333,PropertyID=1
--- WHERE PropertyID=1;
--- 
--- INSERT into Property(Street,City,State,Zip,Description,OwerId) value('sd','sdf','fd',123,'sdf','1');
--- select * from Property;
 
 
 
