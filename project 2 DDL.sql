@@ -73,7 +73,6 @@ unique (UserName)
 create table Log(
 
 Log_id        integer not null AUTO_INCREMENT,
-Decription          varchar(40),
 Timestamp     TIMESTAMP,
 primary key   (Log_id)
 
@@ -82,7 +81,7 @@ primary key   (Log_id)
 create table Listing(
 
 ListingID       integer AUTO_INCREMENT,
-ListingDateTime TIMESTAMP,
+ListingDateTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 SalePrice       integer,
 SoldPrice       integer,
 PropertyID      integer not null,
@@ -107,7 +106,7 @@ create table Property_features(
 PropertyId    integer,
 Features      varchar(40),
 primary key  (PropertyId,Features),
-foreign key  (PropertyId) references Property(PropertyId)
+foreign key  (PropertyId) references Property(PropertyId)  ON DELETE CASCADE ON UPDATE CASCADE
 
 
 );
@@ -125,34 +124,34 @@ primary key (ListingId,pictures)
 
 
 -- PropertyOwner
-ALTER TABLE PropertyOwner ADD CONSTRAINT FK_prepertyowner_profile_id FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID);
+ALTER TABLE PropertyOwner ADD CONSTRAINT FK_prepertyowner_profile_id FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID)  ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 -- Property
-ALTER TABLE Property ADD CONSTRAINT FK_property_owner_id FOREIGN KEY (ownerId) REFERENCES PropertyOwner(OwnerId);
-ALTER TABLE Property ADD CONSTRAINT FK_property_agent_id FOREIGN KEY (AgentId) REFERENCES RealEstateAgent(agentId);
+ALTER TABLE Property ADD CONSTRAINT FK_property_owner_id FOREIGN KEY (ownerId) REFERENCES PropertyOwner(OwnerId)  ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE Property ADD CONSTRAINT FK_property_agent_id FOREIGN KEY (AgentId) REFERENCES RealEstateAgent(agentId)  ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 
 
 
 -- RealEstateAgent
-ALTER TABLE RealEstateAgent ADD CONSTRAINT FK_agent_profile_no FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID);
-ALTER TABLE RegisteredUser ADD CONSTRAINT FK_user_profile_no FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID);
+ALTER TABLE RealEstateAgent ADD CONSTRAINT FK_agent_profile_no FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID)  ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE RegisteredUser ADD CONSTRAINT FK_user_profile_no FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID)  ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 
 
 
 -- Listing
-ALTER TABLE Listing ADD CONSTRAINT FK_listing_propertyID_id FOREIGN KEY (PropertyID) REFERENCES Property(PropertyID);
+ALTER TABLE Listing ADD CONSTRAINT FK_listing_propertyID_id FOREIGN KEY (PropertyID) REFERENCES Property(PropertyID) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Bookmarks
-ALTER TABLE Bookmarks ADD CONSTRAINT FK_bookmar_listing_no FOREIGN KEY (ListingId) REFERENCES Listing(ListingID);
-ALTER TABLE Bookmarks ADD CONSTRAINT FK_bookmar_user_no FOREIGN KEY (UserId) REFERENCES RegisteredUser(UserID);
+ALTER TABLE Bookmarks ADD CONSTRAINT FK_bookmar_listing_no FOREIGN KEY (ListingId) REFERENCES Listing(ListingID)  ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE Bookmarks ADD CONSTRAINT FK_bookmar_user_no FOREIGN KEY (UserId) REFERENCES RegisteredUser(UserID)  ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Listing_Pictures
-ALTER TABLE Listing_Pictures ADD CONSTRAINT FK_listingpic_listing_no FOREIGN KEY (ListingId) REFERENCES Listing(ListingId);
+ALTER TABLE Listing_Pictures ADD CONSTRAINT FK_listingpic_listing_no FOREIGN KEY (ListingId) REFERENCES Listing(ListingId)  ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 -- All user view
@@ -228,32 +227,16 @@ DELIMITER ;
 -- EX :				         FirNam   LasNam   username     password
 
 
--- Trigger (Listing creation --> log table)
--- DELIMITER $$ ;
--- CREATE TRIGGER ListingTriggerLog AFTER UPDATE ON Listing
--- FOR EACH ROW
--- BEGIN
--- INSERT into Log(Log_id,Decription,Timestamp)
--- VALUES ((SELECT ListingID FROM Listing ORDER BY ListingID DESC LIMIT 1),(SELECT Description FROM Listing,Property where Listing.PropertyID=Property.PropertyID ORDER BY ListingID DESC LIMIT 1),now()); 
--- END $$
--- DELIMITER ; $$
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- UPDATE Listing
--- SET SalePrice=123,SoldPrice=333,PropertyID=1
--- WHERE PropertyID=1;
--- 
--- INSERT into Property(Street,City,State,Zip,Description,OwerId) value('sd','sdf','fd',123,'sdf','1');
--- select * from Property;
+-- Trigger (user creation --> log table)
+delimiter #
 
+create trigger log_insert_trigger_on_UserCreation after insert on PropertyListing.RegisteredUser
+for each row
+begin
+  insert into PropertyListing.Log (Log.Timestamp) values (current_Timestamp());
+end#
 
-
+delimiter ;
 
 
 
