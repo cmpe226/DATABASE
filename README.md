@@ -5,7 +5,7 @@
 # DATABASE_Design 
 The "ERD" and the "SCHEMA" are purely based on the MARK's ERD(our last meeting)
 
-## FEATURE WE USE IN OUR DATABASE :
+## FEATURE WE USED IN OUR DATABASE :
 
 * **TRANSACTION QUERY**        
   *  usercreations
